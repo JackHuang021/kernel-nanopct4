@@ -70,7 +70,7 @@
 		 * With 20KHz PWM and an EVERCOOL EC4007H12SA fan, these levels
 		 * work out to 0, ~1200, ~3000, and 5000RPM respectively.
 		 */
-		cooling-levels = <0 12 18 255>;
+		cooling-levels = <12 12 18 255>;
 		#cooling-cells = <2>;
 		fan-supply = <&vcc12v0_sys>;
 		pwms = <&pwm1 0 50000 0>;
