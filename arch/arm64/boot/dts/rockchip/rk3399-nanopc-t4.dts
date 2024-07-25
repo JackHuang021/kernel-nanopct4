@@ -10,6 +10,7 @@
 
 /dts-v1/;
 #include "rk3399-nanopi4.dtsi"
+#include "rk3399-nanopc-t4-dsi.dtsi"
 
 / {
 	model = "FriendlyElec NanoPC-T4";
