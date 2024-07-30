@@ -736,7 +736,12 @@ static int panel_simple_dsi_probe(struct mipi_dsi_device *dsi)
 	if (!of_property_read_u32(dev->of_node, "dsi,lanes", &val))
 		dsi->lanes = val;
 
-	return mipi_dsi_attach(dsi);
+	err = mipi_dsi_attach(dsi);
+
+	if (err)
+		panel_simple_remove(&dsi->dev);
+
+	return err;
 }
 
 static void panel_simple_dsi_remove(struct mipi_dsi_device *dsi)
