@@ -63,15 +63,15 @@
 };
 
 &mipi_in_vopl {
-	status = "disabled";
-};
-
-&mipi_in_vopb {
 	status = "okay";
 };
 
-&hdmi_in_vopb {
+&mipi_in_vopb {
 	status = "disabled";
+};
+
+&hdmi_in_vopb {
+	status = "okay";
 };
 
 &hdmi_in_vopl {
