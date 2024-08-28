@@ -289,7 +289,7 @@ static int panel_simple_get_cmds(struct panel_simple *panel)
 
 static int panel_simple_get_modes(struct drm_panel *panel,struct drm_connector *connector)
 {
- 	struct panel_simple *p = to_panel_simple(panel);
+	struct panel_simple *p = to_panel_simple(panel);
 	struct drm_device *drm = connector->dev;
 	struct drm_display_mode *mode;
 	struct device_node *timings_np;
@@ -443,20 +443,13 @@ static int panel_simple_prepare(struct drm_panel *panel)
 		gpiod_direction_output(p->reset_gpio, !p->reset_level);
 	
 	if (p->desc && p->desc->delay.reset)
-                panel_simple_sleep(p->desc->delay.reset);
+		panel_simple_sleep(p->desc->delay.reset);
 
-       if (p->reset_gpio)
-                gpiod_direction_output(p->reset_gpio, p->reset_level);
+	if (p->reset_gpio)
+		gpiod_direction_output(p->reset_gpio, p->reset_level);
 		
 	if (p->desc && p->desc->delay.init)
 		panel_simple_sleep(p->desc->delay.init);
-
-	if (p->on_cmds) {
-		if (p->dsi)
-			err = panel_simple_dsi_send_cmds(p, p->on_cmds);
-		if (err)
-			dev_err(p->dev, "failed to send on cmds\n");
-	}
 
 	p->prepared = true;
 
@@ -466,6 +459,7 @@ static int panel_simple_prepare(struct drm_panel *panel)
 static int panel_simple_enable(struct drm_panel *panel)
 {
 	struct panel_simple *p = to_panel_simple(panel);
+	int err = 0;
 
 	if (p->enabled)
 		return 0;
@@ -473,9 +467,16 @@ static int panel_simple_enable(struct drm_panel *panel)
 	if (p->desc && p->desc->delay.enable)
 		panel_simple_sleep(p->desc->delay.enable);
 
+	if (p->on_cmds) {
+		if (p->dsi)
+			err = panel_simple_dsi_send_cmds(p, p->on_cmds);
+		if (err)
+			dev_err(p->dev, "failed to send on cmds\n");
+	}
+
 	p->enabled = true;
 
-	return 0;
+	return err;
 }
 
 static int panel_simple_get_timings(struct drm_panel *panel,
@@ -593,7 +594,7 @@ static int panel_simple_probe(struct device *dev, const struct panel_desc *desc)
 		return err;
 	}
 
-    	panel->cmd_type = CMD_TYPE_DEFAULT;
+	panel->cmd_type = CMD_TYPE_DEFAULT;
 
 	panel->power_invert =
 			of_property_read_bool(dev->of_node, "power-invert");
