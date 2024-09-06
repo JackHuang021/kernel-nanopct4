@@ -32,7 +32,7 @@
 #define GOODIX_MAX_WIDTH		4096
 #define GOODIX_INT_TRIGGER		1
 #define GOODIX_CONTACT_SIZE		8
-#define GOODIX_MAX_CONTACT_SIZE		9
+#define GOODIX_MAX_CONTACT_SIZE		9F
 #define GOODIX_MAX_CONTACTS		10
 
 #define GOODIX_CONFIG_MIN_LENGTH	186
@@ -1552,6 +1552,7 @@ static const struct of_device_id goodix_of_match[] = {
 	{ .compatible = "goodix,gt9110" },
 	{ .compatible = "goodix,gt912" },
 	{ .compatible = "goodix,gt9147" },
+	{ .compatible = "goodix,gt9157" },
 	{ .compatible = "goodix,gt917s" },
 	{ .compatible = "goodix,gt927" },
 	{ .compatible = "goodix,gt9271" },
